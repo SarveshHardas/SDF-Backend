@@ -6,14 +6,18 @@ const InternshipSchema = new mongoose.Schema({
   address: { type: String, required: true },
   city: { type: String, required: true },
   phone: { type: String, required: true },
-  email: { type: String, required: true },
-  dob: { type: String, required: true },
+  email: { type: String, required: true, index: true },
+  dob: { type: Date, required: true },
   aadhaar: { type: String, required: true },
   education: { type: String, required: true },
   college: { type: String, required: true },
   hobbies: { type: String },
-  startDate: { type: String, required: true },
+  startDate: { type: Date, required: true },
   bloodGroup: { type: String, required: true },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Internship', InternshipSchema);
+InternshipSchema.index({ createdAt: -1 });
+
+const Internship = mongoose.model('Internship', InternshipSchema);
+
+module.exports = Internship;

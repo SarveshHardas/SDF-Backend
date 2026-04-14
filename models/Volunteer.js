@@ -6,8 +6,8 @@ const VolunteerSchema = new mongoose.Schema({
   address: { type: String, required: true },
   city: { type: String, required: true },
   phone: { type: String, required: true },
-  email: { type: String, required: true },
-  dob: { type: String, required: true },
+  email: { type: String, required: true, index: true },
+  dob: { type: Date, required: true },
   aadhaar: { type: String, required: true },
   education: { type: String, required: true },
   occupation: { type: String, required: true },
@@ -15,4 +15,8 @@ const VolunteerSchema = new mongoose.Schema({
   hobbies: { type: String },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Volunteer', VolunteerSchema);
+VolunteerSchema.index({ createdAt: -1 });
+
+const Volunteer = mongoose.model('Volunteer', VolunteerSchema);
+
+module.exports = Volunteer;

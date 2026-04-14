@@ -7,4 +7,8 @@ const TeamSchema = new mongoose.Schema({
   imageUrl: { type: String }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Team', TeamSchema);
+TeamSchema.index({ createdAt: -1 });
+
+const Team = mongoose.model('Team', TeamSchema);
+
+module.exports = Team;
