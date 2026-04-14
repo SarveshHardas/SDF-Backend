@@ -12,7 +12,7 @@ const volunteerSchema = Joi.object({
   education: Joi.string().trim().required(),
   occupation: Joi.string().trim().required(),
   bloodGroup: Joi.string().trim().required(),
-  hobbies: Joi.string().trim().optional(),
+  hobbies: Joi.string().trim().allow('').optional(),
 });
 
 const internshipSchema = Joi.object({
@@ -28,7 +28,7 @@ const internshipSchema = Joi.object({
   college: Joi.string().trim().required(),
   startDate: Joi.date().required(),
   bloodGroup: Joi.string().trim().required(),
-  hobbies: Joi.string().trim().optional(),
+  hobbies: Joi.string().trim().allow('').optional(),
 });
 
 const eventSchema = Joi.object({
@@ -52,9 +52,10 @@ const loginSchema = Joi.object({
 
 const validate = (schema) => {
   return (req, res, next) => {
-    const { error } = schema.validate(req.body, { abortEarly: false });
+    const { error, value } = schema.validate(req.body, { abortEarly: false, stripUnknown: true });
+    if (!error) req.body = value;
     if (error) {
-      return res.status(400).json({ error: 'Invalid input' });
+      return res.status(400).json({ error: 'Invalid input', details: error.details.map(d => d.message) });
     }
     next();
   };
