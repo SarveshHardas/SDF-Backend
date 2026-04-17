@@ -41,8 +41,8 @@ const eventSchema = Joi.object({
 const teamSchema = Joi.object({
   name: Joi.string().trim().required(),
   role: Joi.string().trim().required(),
-  description: Joi.string().trim().optional(),
   imageUrl: Joi.string().uri().optional(),
+  url: Joi.string().trim().optional(),
 });
 
 const loginSchema = Joi.object({

@@ -12,7 +12,6 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/sdf';
 
-// Security & logging
 app.use(helmet());
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.use(cors({
@@ -20,7 +19,6 @@ app.use(cors({
   credentials: true
 }));
 
-// Trust first proxy (Render, Railway, etc.) so rate-limiter uses real client IP
 app.set('trust proxy', 1);
 
 const limiter = rateLimit({
@@ -31,7 +29,6 @@ const limiter = rateLimit({
 app.use(limiter);
 app.use(express.json({ limit: '10mb' }));
 
-// Health check for deployment platforms
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', uptime: process.uptime() });
 });
