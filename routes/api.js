@@ -59,7 +59,7 @@ router.get('/internship', auth, async (req, res) => {
 
 router.get('/events', async (req, res) => {
   try {
-    const events = await Event.find().sort({ date: -1 });
+    const events = await Event.find().sort({ date: 1 });
     res.status(200).json(events);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch events' });
@@ -98,7 +98,7 @@ router.delete('/events/:id', auth, async (req, res) => {
 
 router.get('/teams', async (req, res) => {
   try {
-    const teams = await Team.find().sort({ createdAt: -1 });
+    const teams = await Team.find().sort({ order: 1 });
     res.status(200).json(teams);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch teams' });
@@ -134,5 +134,4 @@ router.delete('/teams/:id', auth, async (req, res) => {
     res.status(500).json({ error: 'Failed to delete team member' });
   }
 });
-
 module.exports = router;

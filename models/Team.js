@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 const TeamSchema = new mongoose.Schema({
   name: { type: String, required: true },
   role: { type: String, required: true },
-  description: { type: String },
-  imageUrl: { type: String }
+  imageUrl: { type: String },
+  url: { type: String },
+  order: { type: Number, default: 0 }
 }, { timestamps: true });
 
-TeamSchema.index({ createdAt: -1 });
+TeamSchema.index({ order: 1 });
 
 const Team = mongoose.model('Team', TeamSchema);
 
